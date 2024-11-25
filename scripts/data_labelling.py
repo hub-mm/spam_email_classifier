@@ -27,6 +27,6 @@ def label_emails(input_data, output_data):
 
 if __name__ == '__main__':
     input_csv = './data/processed/emails.csv'
-    output_csv = './data/processed/email_labelled.csv'
+    output_csv = './data/processed/emails_labelled.csv'
 
     label_emails(input_csv, output_csv)
