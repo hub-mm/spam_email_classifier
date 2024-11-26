@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s')
 
 def is_spam(email_content):
     if not isinstance(email_content, str):
-        return 0  # Treat non-string entries as non-spam
+        return 0
 
     spam_keywords = [
         'free', 'winner', 'credit', 'offer', 'click here',
@@ -21,7 +21,7 @@ def is_spam(email_content):
     matches = pattern.findall(email_content)
     score = len(matches)
 
-    return 1 if score >= 2 else 0  # Adjust threshold as needed
+    return 1 if score >= 2 else 0
 
 
 def label_emails(input_data, output_data):
