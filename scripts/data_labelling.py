@@ -1,4 +1,4 @@
-# ./scripts/data_labeling.py
+# ./scripts/data_labelling.py
 import pandas as pd
 import re
 import logging
