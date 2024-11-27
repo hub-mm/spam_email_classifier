@@ -117,7 +117,7 @@
 
         <form method="POST">
             <label for="email">Enter Email Content:</label>
-            <textarea id="email" name="email" placeholder="Type or paste the email content here...">{{ email if email }}</textarea>
+            <textarea id="email" name="email" placeholder="Type or paste the email content here...">{{ email | e }}</textarea>
             <button type="submit">Classify Email</button>
         </form>
 

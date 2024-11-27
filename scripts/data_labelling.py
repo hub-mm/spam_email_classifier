@@ -12,11 +12,11 @@ def is_spam(email_content):
         return 0
 
     spam_keywords = [
-        'free', 'winner', 'credit', 'offer', 'click here',
-        'buy now', 'limited time', 'act now', 'congratulations',
-        'unsubscribe', 'advertisement', 'ad', 'ads'
+        r'free', r'winner', r'credit', r'offer', r'click here',
+        r'buy now', r'limited time', r'act now', r'congratulations',
+        r'unsubscribe', r'advertisement', r'\bad\b', r'\bads\b'
     ]
-    pattern = re.compile(r'\b(' + '|'.join(spam_keywords) + r')\b', re.IGNORECASE)
+    pattern = re.compile(r'(' + '|'.join(spam_keywords) + r')', re.IGNORECASE)
 
     matches = pattern.findall(email_content)
     score = len(matches)
@@ -60,6 +60,6 @@ def label_emails(input_data, output_data):
 
 if __name__ == '__main__':
     input_csv = './data/processed/emails.csv'
-    output_csv = './data/processed/email_labelled.csv'
+    output_csv = './data/processed/emails_labelled.csv'
 
     label_emails(input_csv, output_csv)

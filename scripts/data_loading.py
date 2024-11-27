@@ -9,12 +9,10 @@ def load_emails(dataset_path, max_users=None, max_emails_per_user=None):
     emails = []
     user_count = 0
 
-    # Iterate over each user directory in the dataset_path
     for user in os.listdir(dataset_path):
         user_path = os.path.join(dataset_path, user)
 
         if not os.path.isdir(user_path):
-            # Skip if not a directory
             continue
 
         if max_users and user_count >= max_users:
@@ -22,7 +20,6 @@ def load_emails(dataset_path, max_users=None, max_emails_per_user=None):
 
         email_count = 0
 
-        # Walk through all subdirectories and files within the user directory
         for root, dirs, files in os.walk(user_path):
             for email_file in files:
                 if max_emails_per_user and email_count >= max_emails_per_user:
@@ -30,7 +27,6 @@ def load_emails(dataset_path, max_users=None, max_emails_per_user=None):
 
                 file_path = os.path.join(root, email_file)
 
-                # Ensure the path is a file before processing
                 if not os.path.isfile(file_path):
                     continue
 
@@ -65,7 +61,7 @@ if __name__ == '__main__':
     raw_data_path = './data/raw/maildir'
     output_csv = './data/processed/emails.csv'
 
-    MAX_USER = 5
+    MAX_USER = None
     MAX_EMAILS_PER_USER = None
 
     print('Loading emails...')
