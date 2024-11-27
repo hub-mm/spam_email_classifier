@@ -1,59 +1,51 @@
 # train_model.py
 import joblib
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import GridSearchCV
+import logging
 
-def load_data(x_path, y_path):
-    x =  joblib.load(x_path)
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s')
 
-    y_df =  pd.read_csv(y_path)
-    y = y_df['label'].values.ravel()
 
-    return x, y
+def load_data(x_train_path, y_train_path):
+    x_train = joblib.load(x_train_path)
+    y_train_df = pd.read_csv(y_train_path)
+    y_train = y_train_df['label'].values.ravel()
+    return x_train, y_train
+
 
 def train_model(x_train, y_train):
-    # model = LogisticRegression(class_weight='balanced', max_iter=1000)
-    model = RandomForestClassifier(class_weight='balanced', n_estimators=100, random_state=42)
-    print('Training Random Forest model...')
+    logging.info('Training MultinomialNB model with hyperparameter tuning...')
+    param_grid = {'alpha': [0.01, 0.1, 0.5, 1.0]}
+    grid_search = GridSearchCV(MultinomialNB(), param_grid, cv=5, scoring='f1')
+    grid_search.fit(x_train, y_train)
 
+    best_alpha = grid_search.best_params_['alpha']
+    logging.info(f"Best alpha found: {best_alpha}")
+
+    model = MultinomialNB(alpha=best_alpha)
     model.fit(x_train, y_train)
 
     return model
 
-def evaluate_model(model, x_test, y_test):
-    print('Evaluating model...')
-
-    y_pred = model.predict(x_test)
-    report = classification_report(y_test, y_pred)
-    cm = confusion_matrix(y_test, y_pred)
-    print('Classification Report:')
-    print(report)
-    print('Confusion Matrix:')
-    print(cm)
 
 def save_model(model, output_path):
     joblib.dump(model, output_path)
-    print(f"Trained model saved to {output_path}")
+    logging.info(f"Trained model saved to {output_path}")
+
 
 def main():
-    x_path = './models/X.pkl'
-    y_path = './models/y.csv'
+    x_train_path = './models/X_train.pkl'
+    y_train_path = './models/y_train.csv'
     model_output = './models/spam_classifier.pkl'
 
-    x, y = load_data(x_path, y_path)
-
-    print('Splitting data into train and test sets...')
-    x_train, x_test, y_train, y_test = train_test_split(
-        x, y, test_size=0.2, random_state=42, stratify=y
-    )
-    print(f"Training sample: {x_train.shape[0]}, Testing samples: {x_test.shape[0]}")
+    x_train, y_train = load_data(x_train_path, y_train_path)
 
     model = train_model(x_train, y_train)
-    evaluate_model(model, x_test, y_test)
     save_model(model, model_output)
+
 
 if __name__ == '__main__':
     main()
