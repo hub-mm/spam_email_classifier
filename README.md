@@ -35,7 +35,7 @@ It contains approximately 0.5 million emails from about 150 users.
 ### Steps
 1. **Clone Repository**
     ```bash 
-    git clone
+    git clone https://github.com/hub-mm/spam_email_classifier.git
     ```
 2. **Move into Repository**
     ```bash
