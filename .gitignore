@@ -6,16 +6,16 @@ __pycache__/
 *.so
 
 # Large Files
-./data/raw/maildir
-./data/processed/emails.csv
-./data/processed/emails_labelled.csv
-./data/processed/emails_preprocessed.csv
-./models/X_train.pkl
-./models/X_test.pkl
-./models/y_train.csv
-./models/y_test.csv
-./models/tfidf_vectorizer.pkl
-./models/spam_classifier.pkl
+data/raw/maildir
+data/processed/emails.csv
+data/processed/emails_labelled.csv
+data/processed/emails_preprocessed.csv
+models/X_train.pkl
+models/X_test.pkl
+models/y_train.csv
+models/y_test.csv
+models/tfidf_vectorizer.pkl
+models/spam_classifier.pkl
 
 # Distribution / packaging / User Specific
 .idea/
